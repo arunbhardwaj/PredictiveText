@@ -22,5 +22,6 @@ public abstract class AbstractMarkovModel implements IMarkovModel {
     }
  
     abstract public String getRandomText(int numChars);
-
+    
+    
 }
