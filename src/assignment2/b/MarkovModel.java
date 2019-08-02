@@ -64,4 +64,8 @@ public class MarkovModel extends AbstractMarkovModel {
 		return name;
 	}
 	
+	public String toString() {
+		return String.format("MarkovModel of order %f.", nCharPredict);
+	}
+	
 }

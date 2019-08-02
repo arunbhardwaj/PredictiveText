@@ -42,4 +42,8 @@ public class MarkovOne extends AbstractMarkovModel {
 		return name;
 	}
 	
+	public String toString() {
+		return "MarkovModel of order 1";
+	}
+	
 }

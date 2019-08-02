@@ -45,4 +45,8 @@ public class MarkovFour extends AbstractMarkovModel {
 		// TODO Auto-generated method stub
 		return name;
 	}
+	
+	public String toString() {
+		return "MarkovModel of order 4";
+	}
 }

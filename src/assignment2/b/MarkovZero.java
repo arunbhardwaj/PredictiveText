@@ -45,7 +45,7 @@ public class MarkovZero extends AbstractMarkovModel {
 	
 	
 	public String toString() {
-		System.out.println("MarkovModel of order " + 0);
+		return "MarkovModel of order 0";
 	}
 
 }
