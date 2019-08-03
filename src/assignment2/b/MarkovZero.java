@@ -16,14 +16,6 @@ public class MarkovZero extends AbstractMarkovModel {
 		myRandom = new Random();
 	}
 	
-	public void setRandom(int seed){
-		myRandom = new Random(seed);
-	}
-	
-	public void setTraining(String s){
-		myText = s.trim();
-	}
-	
 	public String getRandomText(int numChars){
 		if (myText == null){
 			return "";
@@ -37,12 +29,9 @@ public class MarkovZero extends AbstractMarkovModel {
 		return sb.toString();
 	}
 
-	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return name;
 	}
-	
 	
 	public String toString() {
 		return "MarkovModel of order 0";

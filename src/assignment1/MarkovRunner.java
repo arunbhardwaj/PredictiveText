@@ -141,7 +141,7 @@ public class MarkovRunner {
 		}
 	}
     
-	private static void printOut(String s){
+	private static void printOut(String s) {
 		String[] words = s.split("\\s+");
 		int psize = 0;
 		System.out.println("----------------------------------");

@@ -5,6 +5,7 @@ import java.util.Random;
 
 import assignment2.NumberToWordsConverter;
 
+//Extends the base class to inherit from the super class
 public class MarkovModel extends AbstractMarkovModel {
 	private static String name = "MarkovModel";
 	private int nCharPredict;
@@ -14,26 +15,6 @@ public class MarkovModel extends AbstractMarkovModel {
 		nCharPredict = N;
 		myRandom = new Random();
 		name = "Markov" + c.numToWords(N);
-//		switch (N) {
-//		case 0: name = "MarkovZero";
-//				break;
-//		case 1: name = "MarkoveOne";
-//				break;
-//		case 2: name = "MarkovTwo";
-//				break;
-//		case 3:	name = "MarkovThree";
-//				break;
-//		case 4: name = "MarkovFour";
-//				break;
-//		}
-	}
-	
-	public void setRandom(int seed){
-		myRandom = new Random(seed);
-	}
-	
-	public void setTraining(String s){
-		myText = s.trim();
 	}
 	
 	public String getRandomText(int numChars){
@@ -60,12 +41,11 @@ public class MarkovModel extends AbstractMarkovModel {
 	
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return name;
 	}
 	
 	public String toString() {
-		return String.format("MarkovModel of order %f.", nCharPredict);
+		return String.format("MarkovModel of order %d.", nCharPredict);
 	}
 	
 }

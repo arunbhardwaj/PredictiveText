@@ -1,14 +1,15 @@
 package assignment2.b;
 
 /**
- * Abstract class AbstractMarkovModel - write a description of the class here
+ * Abstract class AbstractMarkovModel
  * 
- * @author (your name here)
- * @version (version number or date here)
+ * @author Arun Bhardwaj
+ * @version 8.2.2019
  */
 
 import java.util.*;
 
+//Implements for Interfaces
 public abstract class AbstractMarkovModel implements IMarkovModel {
     protected String myText;
     protected Random myRandom;
@@ -17,12 +18,14 @@ public abstract class AbstractMarkovModel implements IMarkovModel {
         myRandom = new Random();
     }
     
+    public void setRandom(int seed) {
+    	myRandom = new Random(seed);
+    }
+    
     public void setTraining(String s) {
         myText = s.trim();
     }
  
-    abstract public String getRandomText(int numChars);
-    
     protected ArrayList<String> getFollows(String key) {
 		ArrayList<String> follows = new ArrayList<String>();
 		int index = 0;
@@ -43,4 +46,24 @@ public abstract class AbstractMarkovModel implements IMarkovModel {
 		}
 		return follows;
 	}
+    
+    //This method varies for each markov model.
+    abstract public String getRandomText(int numChars);
+    
+    //This method varies for each markov model.
+    abstract public String toString();
+    
+    //This method varies for each markov model.
+    abstract public String getName();
+    
+    /*
+     * public = all classes
+     * private = only this class
+     * protected = this package + subclasses
+     * abstract = you must implement + you can have non-static and non-final fields.
+     * 			you can have protected and private methods.
+     * interfaces = you must override and implement the methods
+     * 			fields are public, static, AND final
+     * 			methods are public
+     */
 }
