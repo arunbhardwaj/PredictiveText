@@ -3,9 +3,7 @@ package assignment2.b;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Random;
-
 import assignment2.NumberToWordsConverter;
 
 public class EfficientMarkovModel extends AbstractMarkovModel {
@@ -18,6 +16,12 @@ public class EfficientMarkovModel extends AbstractMarkovModel {
 		nCharPredict = N;
 		myRandom = new Random();
 		name = "EfficientMarkov" + c.numToWords(N);
+	}
+	
+	public EfficientMarkovModel(int order, int seed) {
+		nCharPredict = order;
+		myRandom = new Random(seed);
+		name = "EfficientMarkov" + c.numToWords(order);
 	}
 	
 	public void setTraining(String s) {
@@ -50,10 +54,13 @@ public class EfficientMarkovModel extends AbstractMarkovModel {
 //		printHashMapInfo();
 	}
 	
-	private void printHashMapInfo() {
+	public void printHashMapInfo() {
+		//Prints the HashMap if the size is small.
 		if (hash.size() < 100) {
 			System.out.println(hash.toString());
 		} 
+		
+		//Prints total number of keys in the hash.
 		System.out.println("The number of keys in the hash: " + hash.size());
 		
 		ArrayList<String> max = new ArrayList<String>(0);
@@ -71,6 +78,7 @@ public class EfficientMarkovModel extends AbstractMarkovModel {
 			}
 		}
 		
+		//Prints the largest value and the keys associated with them.
 		System.out.println("The size of the largest value: " + max.size());
 		System.out.println("The key(s) with the largest value: ");
 		for (String key : maxKeys) {

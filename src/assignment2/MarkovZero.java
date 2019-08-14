@@ -1,7 +1,5 @@
 package assignment2;
 
-import java.util.ArrayList;
-
 /**
  * Write a description of class MarkovZero here.
  * 

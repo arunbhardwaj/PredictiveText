@@ -1,7 +1,5 @@
 package assignment2.b;
 
-import java.util.ArrayList;
-
 /**
  * Simple running class.
  * 
@@ -70,11 +68,13 @@ public class MarkovRunnerWithInterface {
 		markov.setTraining("yes-this-is-a-thin-pretty-pink-thistle");
 		System.out.println(markov.toString());
 		markov.buildMap(2);
+		markov.printHashMapInfo();
 		
         for(int k=0; k < 3; k++){
 			String st = markov.getRandomText(50);
 			printOut(st);
 		}
+        
 	}
 	
 	public void compareMethods(int order, int seed) {
@@ -105,10 +105,23 @@ public class MarkovRunnerWithInterface {
 	}
 	
 	public static void main(String[] args) {
+		FileResource fr = new FileResource();
+		String st = fr.asString();
+		st = st.replace('\n', ' ');
+		
+		//This is important as reading in data from a file ends the file with a new line
+		//which gets converted into whitespace by the above line and will give incorrect
+		//answers if you don't trim it off. 
+		st = st.trim();
+		int size = 200;
+		
 		MarkovRunnerWithInterface test = new MarkovRunnerWithInterface();
-		//test.runMarkov(2);
+//		test.runMarkov(2);
 //		test.testHashMap();
-		test.compareMethods(2, 42);
+//		test.compareMethods(2, 42);
+		EfficientMarkovModel markov = new EfficientMarkovModel(5);
+		test.runModel(markov, st, size, 615);
+		markov.printHashMapInfo();
 	}
 	
 }
