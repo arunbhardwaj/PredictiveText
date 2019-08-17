@@ -97,12 +97,12 @@ public class MarkovRunner {
 
     public static void main(String[] args) {
     	MarkovRunner runner = new MarkovRunner();
-    	runner.runMarkov(175,200);
+//    	runner.runMarkovWordOne();
 //    	runner.runMarkovTwo(549, 200);
     	
     	
     	
-//    	MarkovWordTwo test = new MarkovWordTwo();
+//    	MarkovWord test = new MarkovWord();
 //    	test.testIndexOf();
     	
 		/*

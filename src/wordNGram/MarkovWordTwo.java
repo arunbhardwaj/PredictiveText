@@ -102,6 +102,29 @@ public class MarkovWordTwo implements IMarkovModel {
 		return -1;
 	}
 	
+//	private void buildHash(String key1, String key2) {
+//		ArrayList<String> follows = new ArrayList<String>();
+//		for (int index = indexOf(myText, key1, 0); index < myText.length - 2; index = indexOf(myText, key1, index + 1)) {
+//			if (index == -1) {
+//				break;
+//			}
+//			if (key2.equalsIgnoreCase(myText[index + 1])) {
+//				follows.add( myText[index + 2] );
+//			}
+//		}
+//		hash.put(key1 + " " + key2, follows);
+//	}
+//	
+//	private int indexOf(String[] words, String target, int start) {
+//		
+//		for (int i = start; i < words.length; i++) {
+//			if (target.equalsIgnoreCase(words[i])) {
+//				return i;
+//			} 
+//		}
+//		return -1;
+//	}
+	
 	public void testIndexOf() {
 		String test = "this is just a test yes this is a simple test";
 		String[] words = test.split("\\s+");
