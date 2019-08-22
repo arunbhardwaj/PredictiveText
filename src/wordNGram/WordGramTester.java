@@ -35,13 +35,17 @@ public class WordGramTester {
 	public static void main(String[] args) {
 		String source = "this is a test this is a test this is a test of words";
 		String[] words = source.split("\\s+");
-		WordGram test = new WordGram(words, 0, words.length);
+		WordGram test = new WordGram(words, 0, 4);
 		System.out.println(test.toString());
 		System.out.println(test.shiftAdd("yes").toString());
 		System.out.println(test.toString());
 		
 		MarkovWord sample = new MarkovWord();
 		sample.testIndexOf();
+		
+		WordGramTester tester = new WordGramTester();
+		tester.testWordGram();
+		tester.testWordGramEquals();
 	}
 	
 }

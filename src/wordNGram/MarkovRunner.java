@@ -1,6 +1,10 @@
 package wordNGram;
 
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 /**
  * A simple runner class to test our random text generation (word-based) algorithm.
  * 
@@ -21,7 +25,6 @@ public class MarkovRunner {
         if (seed != -1) {
         	markov.setRandom(seed);
         }
-        markov.setRandom(seed);
         System.out.println("running with " + markov.getName()); 
         for(int k=0; k < 3; k++){ 
             String st = markov.getRandomText(size); 
@@ -79,6 +82,20 @@ public class MarkovRunner {
 		runModel(markovWord, st, size, seed); 
     }
     
+    
+    
+    public void runMarkovWord(int seed, int size) throws IOException {
+    	String source = "C:\\Users\\Arun\\eclipse-workspace\\PredictiveText\\data\\confucius.txt";
+//		FileReader fr = new FileReader(source);
+//		String st = fr.toString();
+		String st = new String(Files.readAllBytes(Paths.get(source)));
+		st = st.replace('\n', ' ');
+		
+		MarkovWord markovWord = new MarkovWord(3); 
+		if (seed != -1) {markovWord.setRandom(seed);}
+		runModel(markovWord, st, size, seed); 
+    }
+    
     private void printOut(String s){
         String[] words = s.split("\\s+");
         int psize = 0;
@@ -95,12 +112,10 @@ public class MarkovRunner {
         System.out.println("\n----------------------------------");
     } 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
     	MarkovRunner runner = new MarkovRunner();
-//    	runner.runMarkovWordOne();
-//    	runner.runMarkovTwo(549, 200);
     	
-    	
+    	runner.runMarkovWord(643, 20);
     	
 //    	MarkovWord test = new MarkovWord();
 //    	test.testIndexOf();
