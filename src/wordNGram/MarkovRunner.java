@@ -4,9 +4,9 @@ package wordNGram;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 
-import assignment2.b.EfficientMarkovModel;
+import assignment2.b.IMarkovModel;
+import edu.duke.*;
 
 /**
  * A simple runner class to test our random text generation (word-based) algorithm.
@@ -14,10 +14,6 @@ import assignment2.b.EfficientMarkovModel;
  * @author Arun Bhardwaj 
  * @version (a version number or a date)
  */
-
-import assignment2.b.IMarkovModel;
-import assignment2.b.MarkovModel;
-import edu.duke.*;
 
 public class MarkovRunner {
     public void runModel(IMarkovModel markov, String text, int size){ 
@@ -93,7 +89,7 @@ public class MarkovRunner {
 		String st = new String(Files.readAllBytes(Paths.get(source)));
 		st = st.replace('\n', ' ');
 		
-		MarkovWord markovWord = new MarkovWord(5); 
+		MarkovWord markovWord = new MarkovWord(3); 
 		if (seed != -1) {markovWord.setRandom(seed);}
 		runModel(markovWord, st, size, seed); 
     }
@@ -145,7 +141,7 @@ public class MarkovRunner {
     	long end = System.nanoTime();
 		
 		long time1 = middle - start;
-		long time2 = end - middle2;
+		long time2 = end - middle;
 		
 		
 		System.out.printf("%s took %d nanoseconds.\n", markov.getName(), time1 );
@@ -163,23 +159,15 @@ public class MarkovRunner {
 		st = st.trim();
     	
     	MarkovRunner runner = new MarkovRunner();
-//    	runner.runMarkovWord(100, 844);
+//    	runner.runMarkovWord(100, 371);
 //    	runner.testHashMap();
-//    	runner.compareMethods();
+    	runner.compareMethods();
     	
-    	EfficientMarkovWord test = new EfficientMarkovWord(2);
-    	test.setRandom(65);
-    	test.setTraining(st);
-    	test.printHashMapInfo();
+//    	EfficientMarkovWord test = new EfficientMarkovWord(2);
+//    	test.setRandom(65);
+//    	test.setTraining(st);
+//    	test.printHashMapInfo();
     	
-		/*
-		 * MarkovWordOne test = new MarkovWordOne();
-		 * String source =
-		 * "C:\\Users\\Arun\\eclipse-workspace\\PredictiveText\\data\\confucius.txt";
-		 * FileResource fr = new FileResource(source); String text = fr.asString();
-		 * test.setTraining(text); System.out.println(test.hash.size());
-		 */
-    
     }
     
 }

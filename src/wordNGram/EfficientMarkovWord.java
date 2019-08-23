@@ -14,7 +14,7 @@ public class EfficientMarkovWord implements IMarkovModel {
 	private int myOrder;
 	private NumberToWordsConverter c = new NumberToWordsConverter();
 	private String name = "EfficientMarkovWord";
-	public HashMap<String, ArrayList<String>> hash = new HashMap<>(); //Have to initialize the hashmap, or it throws a nullpointerError in buildMap()
+	public HashMap<WordGram, ArrayList<String>> hash = new HashMap<>(); //Have to initialize the hashmap, or it throws a nullpointerError in buildMap()
 
 	
 	public EfficientMarkovWord() {
@@ -74,8 +74,7 @@ public class EfficientMarkovWord implements IMarkovModel {
 	
 	
 	public ArrayList<String> getFollows(WordGram kGram) {
-
-		return hash.get(kGram.toString() );
+		return hash.get(kGram );
 	}
 	
 	/**
@@ -120,18 +119,33 @@ public class EfficientMarkovWord implements IMarkovModel {
 			
 			// change the key
 			key = new WordGram(myText, i, myOrder);
-
+			ArrayList<String> follows = new ArrayList<String>();
+			
 			// Add the key if it hasn't already
-			if ( !hash.containsKey(key.toString().toLowerCase()) ) {
-				buildHash(key);
+			if ( hash.containsKey(key) ) {
+				try {
+					hash.get(key).add(myText[i + myOrder]);
+				} catch (ArrayIndexOutOfBoundsException e) {
+					// Do nothing if you catch the lastIndex which results in null
+				}
+			} else {
+				try {
+					follows.add(myText[i + myOrder]);
+				} catch (ArrayIndexOutOfBoundsException e) {
+					// Do nothing
+				}
+				hash.put(key, follows);
 			}
 		}
 	}
 	
+	@Deprecated
 	/**
 	 * Finds the instances within the text for the given key, and 
 	 * adds the proceeding word to the follows ArrayList, which 
 	 * then gets added to the hashmap once all instances are found.
+	 * 
+	 * Deprecated as it produces longer than normal run times. 
 	 * 
 	 * @param key
 	 */
@@ -151,7 +165,7 @@ public class EfficientMarkovWord implements IMarkovModel {
 		}
 		
 		// Add the array and key to the hash
-		hash.put(key.toString(), follows);
+		hash.put(key, follows);
 	}
 	
 	public void testIndexOf() {
@@ -181,17 +195,17 @@ public class EfficientMarkovWord implements IMarkovModel {
 		System.out.println("The number of keys in the hash: " + hash.size());
 		
 		int maxSize = 0; //
-		ArrayList<String> keysWithMax = new ArrayList<String>();
+		ArrayList<WordGram> keysWithMax = new ArrayList<WordGram>();
 		
 		// Get the max size amongst all entries in the hash
-		for (Map.Entry<String, ArrayList<String>> m : hash.entrySet()) {
+		for (Map.Entry<WordGram, ArrayList<String>> m : hash.entrySet()) {
 			if (m.getValue().size() > maxSize) {
 				maxSize = m.getValue().size();
 			} 
 		}
 		
 		// Get all keys that have the max size
-		for (Map.Entry<String, ArrayList<String>> m : hash.entrySet()) {
+		for (Map.Entry<WordGram, ArrayList<String>> m : hash.entrySet()) {
 			if (m.getValue().size() == maxSize) {
 				keysWithMax.add(m.getKey());
 			}
@@ -199,13 +213,11 @@ public class EfficientMarkovWord implements IMarkovModel {
 		
 		//Prints the largest value and the keys associated with them.
 		System.out.println("The size of the largest value: " + maxSize);
-//		System.out.println("The key(s) with the largest value: ");
-//		for (String key : keysWithMax) {
-//			System.out.println("[" + key + "]");
-//			System.out.println(hash.get(key));
-//		}
-//		
-//		System.out.println();
+		System.out.println("The key(s) with the largest value: ");
+		for (WordGram key : keysWithMax) {
+			System.out.println("[" + key + "]");
+		}
+
 	}
 
 }
