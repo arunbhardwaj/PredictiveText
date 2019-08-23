@@ -50,11 +50,9 @@ public class MarkovWord implements IMarkovModel {
 		StringBuilder sb = new StringBuilder();
 		int index = myRandom.nextInt(myText.length - myOrder);
 		
-		//Initialize the string with a random selection from the text.
-//		String word = myText[index];
-		String space = new String(" ");
+		//Initialize the string with a singular random selection from the text.
 		WordGram key = new WordGram(myText, index, myOrder);
-		sb.append(key.toString()).append(space);
+		sb.append(key.toString()).append(" ");
 		
 		
 		//Build the string with likely-proceeding characters.
@@ -66,7 +64,7 @@ public class MarkovWord implements IMarkovModel {
 				break;
 			}
 			index = myRandom.nextInt(follows.size());
-			sb.append(follows.get(index)).append(space);
+			sb.append(follows.get(index)).append(" ");
 			key = key.shiftAdd(follows.get(index));
 			
 			
@@ -75,58 +73,10 @@ public class MarkovWord implements IMarkovModel {
 		return sb.toString().trim();
 	}
 	
-//	@Override
-//	public String getRandomText(int numWords) {
-//		if (myText == null) {
-//			return "";
-//		}
-//		
-//		// Declare and Initialize the variables
-//		StringBuilder sb = new StringBuilder();
-//		String space = new String(" ");
-//		String word = new String();
-//		String[] words = new String[myOrder];
-//		int index;
-//		index = myRandom.nextInt(myText.length);
-//		word = myText[index];
-//		sb.append(word).append(space);
-//		words[0] = word;
-//		
-//		//Add a random selection of words from the text to 
-//		//the StringBuilder and to the key array
-//		for (int i = 1; i < myOrder; i++) {
-//			ArrayList<String> follows = getFollows(new WordGram(words, i-1, 1));
-//			index = myRandom.nextInt(follows.size());
-//			word = myText[index];
-//			sb.append(word).append(space);
-//			words[i] = word;
-//		}
-//		
-//		
-//		// Key WordGram
-//		WordGram key = new WordGram(words, 0, words.length);
-//		
-//		
-//		//Build the string with likely-proceeding words.
-//		for (int k=0; k < numWords - myOrder; k++) {
-//			
-//			// Get the follows
-//			ArrayList<String> follows = getFollows(key);
-//			if (follows.size() == 0) {
-//				continue;
-//			}
-//			index = myRandom.nextInt(follows.size());
-//			sb.append(follows.get(index)).append(space);
-//			key.shiftAdd(follows.get(index));
-//			
-//		}
-//		
-//		return sb.toString().trim();
-//	}
-	
 	private ArrayList<String> getFollows(WordGram kGram) {
 		ArrayList<String> follows = new ArrayList<String>();
-		// iterate through the text to find 
+		
+		// iterate through the text to find the keyGram
 		for (int index = indexOf(myText, kGram, 0);	index <= myText.length - kGram.length(); 	index = indexOf(myText, kGram, index + 1)) {
 			if (index == -1 || index == myText.length - kGram.length()) {
 				break;
@@ -173,16 +123,17 @@ public class MarkovWord implements IMarkovModel {
 	public void testIndexOf() {
 		String test = "this is just a test yes this is a simple test";
 		String[] words = test.split("\\s+");
-		System.out.printf("The string is: \n| %s |\n", test);
-		System.out.println("The length of the string in an array is: " + words.length);
 		String[] sample = new String[]{"This", "is"};;
 		WordGram target = new WordGram(sample, 0, sample.length);
+		
+		System.out.printf("The string is: \n| %s |\n", test);
+		System.out.println("The length of the string in an array is: " + words.length);
 		System.out.println(indexOf(words, target , 0));
-//		System.out.println(indexOf(words, "this", 3));
-//		System.out.println(indexOf(words, "frog", 5));
-//		System.out.println(indexOf(words, "simple", 2));
-//		System.out.println(indexOf(words, "test", 5));
-		this.myText = words;
+//		sample = new String[] {"this"};
+//		target = new WordGram(sample, 0, sample.length);
+//		System.out.println(indexOf(words, target, 3));
+//		sample = new String[] {"frog"};
+//		target = new WordGram(sample, 0, sample.length);
 	}
 
 }

@@ -4,6 +4,9 @@ package wordNGram;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+
+import assignment2.b.EfficientMarkovModel;
 
 /**
  * A simple runner class to test our random text generation (word-based) algorithm.
@@ -13,6 +16,7 @@ import java.nio.file.Paths;
  */
 
 import assignment2.b.IMarkovModel;
+import assignment2.b.MarkovModel;
 import edu.duke.*;
 
 public class MarkovRunner {
@@ -47,7 +51,7 @@ public class MarkovRunner {
      * @param seed for text generation. Enter -1 for random seed.
      * @param size of text generated.
      */
-    public void runMarkov(int seed, int size) {
+    public void runMarkov(int size, int seed) {
 		FileResource fr = new FileResource(); 
 		String st = fr.asString(); 
 		st = st.replace('\n', ' ');
@@ -82,16 +86,14 @@ public class MarkovRunner {
 		runModel(markovWord, st, size, seed); 
     }
     
-    
-    
-    public void runMarkovWord(int seed, int size) throws IOException {
-    	String source = "C:\\Users\\Arun\\eclipse-workspace\\PredictiveText\\data\\confucius.txt";
+    public void runMarkovWord(int size, int seed) throws IOException {
 //		FileReader fr = new FileReader(source);
 //		String st = fr.toString();
+    	String source = "C:\\Users\\Arun\\eclipse-workspace\\PredictiveText\\data\\confucius.txt";
 		String st = new String(Files.readAllBytes(Paths.get(source)));
 		st = st.replace('\n', ' ');
 		
-		MarkovWord markovWord = new MarkovWord(3); 
+		MarkovWord markovWord = new MarkovWord(5); 
 		if (seed != -1) {markovWord.setRandom(seed);}
 		runModel(markovWord, st, size, seed); 
     }
@@ -112,13 +114,63 @@ public class MarkovRunner {
         System.out.println("\n----------------------------------");
     } 
 
+    public void testHashMap() {
+    	String source = "this is a test yes this is really a test yes a test this is wow";
+    	EfficientMarkovWord markov = new EfficientMarkovWord(2);
+    	markov.setRandom(42);
+    	markov.setTraining(source);
+    	markov.printHashMapInfo();
+    	String output = markov.getRandomText(50);
+    	printOut(output);
+    }
+    
+    public void compareMethods() {
+    	FileResource fr = new FileResource(); 
+    	String text = fr.asString();
+
+    	MarkovWord markov = new MarkovWord(2);
+    	markov.setTraining(text);
+    	long start = System.nanoTime();
+    	runModel(markov, text, 100, 42);
+    	
+    	long middle = System.nanoTime();
+    	
+    	EfficientMarkovWord eMarkov = new EfficientMarkovWord(2);
+    	eMarkov.setTraining(text);
+    	
+    	// Middle 2 for excluding buildHash time
+    	long middle2 = System.nanoTime();
+    	runModel(eMarkov, text, 100, 42);
+    	
+    	long end = System.nanoTime();
+		
+		long time1 = middle - start;
+		long time2 = end - middle2;
+		
+		
+		System.out.printf("%s took %d nanoseconds.\n", markov.getName(), time1 );
+		System.out.printf("%s took %d nanoseconds.\n", eMarkov.getName(), time2 );
+		
+		System.out.printf("%s was %d times faster than regular model.\n", eMarkov.getName(), time1/time2 );
+		
+		
+    }
+    
     public static void main(String[] args) throws IOException {
+    	String source = "C:\\Users\\Arun\\eclipse-workspace\\PredictiveText\\data\\confucius.txt";
+		String st = new String(Files.readAllBytes(Paths.get(source)));
+		st = st.replace('\n', ' ');
+		st = st.trim();
+    	
     	MarkovRunner runner = new MarkovRunner();
+//    	runner.runMarkovWord(100, 844);
+//    	runner.testHashMap();
+//    	runner.compareMethods();
     	
-    	runner.runMarkovWord(643, 20);
-    	
-//    	MarkovWord test = new MarkovWord();
-//    	test.testIndexOf();
+    	EfficientMarkovWord test = new EfficientMarkovWord(2);
+    	test.setRandom(65);
+    	test.setTraining(st);
+    	test.printHashMapInfo();
     	
 		/*
 		 * MarkovWordOne test = new MarkovWordOne();
